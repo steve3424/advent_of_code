@@ -29,8 +29,11 @@ with open("dumbo_input.txt") as f:
     lines = [l.rstrip() for l in lines]
     octos = [[int(c) for c in l] for l in lines]
 
+    part_1_iters = 100
     total_flashes = 0
-    for i in range(100):
+    iteration = 1
+    first_sim_flash = -1
+    while first_sim_flash == -1:
         # First iterate to increase all by 1
         for line in octos:
             for col in range(0,len(line)):
@@ -40,6 +43,7 @@ with open("dumbo_input.txt") as f:
         # Uses bubble sort tactic of iterating the
         # while loop until it goes through once with
         # no flashes
+        flashes_this_iter = 0
         still_flashing = True
         while still_flashing:
             still_flashing = False
@@ -47,6 +51,15 @@ with open("dumbo_input.txt") as f:
                 for col,o in enumerate(line):
                     if o > 9:
                         still_flashing = True
-                        total_flashes += 1
+                        flashes_this_iter += 1
                         FlashOcto(row,col,octos)
+
+        if iteration <= part_1_iters:
+            total_flashes += flashes_this_iter
+
+        if flashes_this_iter == (len(octos) * len(octos[0])):
+            first_sim_flash = iteration
+
+        iteration += 1
     print(f"Part 1: {total_flashes}")
+    print(f"Part 2: {first_sim_flash}")
