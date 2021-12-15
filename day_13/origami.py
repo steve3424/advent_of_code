@@ -42,9 +42,9 @@ with open("origami_input_1.txt") as f:
             current_dict = dense_grid['rows']
             other_dict = dense_grid['cols']
 
-        for i in range(1, value + 1):
-            keep_key    = value - i
-            combine_key = value + i
+        for j in range(1, value + 1):
+            keep_key    = value - j
+            combine_key = value + j
             keep_dict    = current_dict[keep_key]    if keep_key    in current_dict else None
             combine_dict = current_dict[combine_key] if combine_key in current_dict else None
             if keep_dict != None and combine_dict != None:
@@ -64,16 +64,14 @@ with open("origami_input_1.txt") as f:
                 for k in combine_dict:
                     other_dict[k].remove(combine_key)
                     other_dict[k].add(keep_key)
-        if i == 1:
+        if i == 0:
             # Count remaining dots
             num_dots = 0
             for k,v in dense_grid["rows"].items():
                 num_dots += len(v)
             print(f"Part 1 {num_dots}")
 
-    print(dense_grid)
-
-    ##
+    print("Part 2:")
     width = max(dense_grid["cols"].keys()) + 1
     rows = sorted(dense_grid["rows"].keys())
     empty_row = 0
